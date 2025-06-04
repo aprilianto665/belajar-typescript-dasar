@@ -46,4 +46,31 @@ describe("Function", function () {
     expect(sayHello("Rusdi")).toBe("Hello Rusdi");
     expect(sayHello("Mas", "Rusdi")).toBe("Hello Mas Rusdi");
   });
+
+  it("shoult support function overloading", function () {
+    function callMe(value: number): number;
+    function callMe(value: string): string;
+    function callMe(value: any): any {
+      if (typeof value === "string") {
+        return value.toUpperCase();
+      } else if (typeof value === "number") {
+        return value * 10;
+      }
+    }
+
+    expect(callMe("Rusdi")).toBe("RUSDI");
+    expect(callMe(10)).toBe(100);
+  });
+
+  it("should support function as parameter", function () {
+    function sayHello(name: string, filter: (name: string) => string): string {
+      return `Hello ${filter(name)}`;
+    }
+
+    function toUpper(name: string): string {
+      return name.toUpperCase();
+    }
+
+    expect(sayHello("rusdi", toUpper)).toBe("Hello RUSDI");
+  });
 });
